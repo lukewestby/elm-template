@@ -1,4 +1,4 @@
-module Template (Template, template, withValue, andValue, withString, andString, render) where
+module Template exposing (Template, template, withValue, andValue, withString, andString, render)
 
 {-| Type-safe string templating
 
@@ -13,16 +13,18 @@ module Template (Template, template, withValue, andValue, withString, andString,
 
 -}
 
+-- where
+
 
 type Component a
-    = Literal String
-    | Interpolation (a -> String)
+  = Literal String
+  | Interpolation (a -> String)
 
 
 {-| A list of the components of a template
 -}
 type alias Template a =
-    List (Component a)
+  List (Component a)
 
 
 {-| Create an initial template starting with the given string
@@ -31,7 +33,7 @@ type alias Template a =
 -}
 template : String -> Template record
 template initial =
-    [ Literal initial ]
+  [ Literal initial ]
 
 
 {-| Attach a record accessor to a template
@@ -41,7 +43,7 @@ template initial =
 -}
 withValue : (record -> String) -> Template record -> Template record
 withValue interpolator template =
-    Interpolation interpolator :: template
+  Interpolation interpolator :: template
 
 
 {-| Attach a record accessor to a template inline
@@ -50,7 +52,7 @@ withValue interpolator template =
 -}
 andValue : Template record -> (record -> String) -> Template record
 andValue =
-    flip withValue
+  flip withValue
 
 
 {-| Attach a string to a template
@@ -61,7 +63,7 @@ andValue =
 -}
 withString : String -> Template record -> Template record
 withString string template =
-    (Literal string) :: template
+  (Literal string) :: template
 
 
 {-| Attach a string to a template inline
@@ -70,17 +72,17 @@ withString string template =
 -}
 andString : Template record -> String -> Template record
 andString =
-    flip withString
+  flip withString
 
 
 renderComponent : record -> Component record -> String -> String
 renderComponent record component result =
-    case component of
-        Literal string ->
-            (++) result string
+  case component of
+    Literal string ->
+      (++) result string
 
-        Interpolation accessor ->
-            (++) result (accessor record)
+    Interpolation accessor ->
+      (++) result (accessor record)
 
 
 {-| Walks through a template's components and renders them to a single string
@@ -91,4 +93,4 @@ renderComponent record component result =
 -}
 render : Template record -> record -> String
 render template record =
-    List.foldr (renderComponent record) "" template
+  List.foldr (renderComponent record) "" template

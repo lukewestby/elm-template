@@ -1,9 +1,11 @@
-module Template.Infix (..) where
+module Template.Infix exposing (..)
 
 {-| Infix operators for more concise template construction
 
 @docs (<%), (%>)
 -}
+
+-- where
 
 import Template exposing (Template, andValue, andString)
 
@@ -14,7 +16,7 @@ import Template exposing (Template, andValue, andString)
 -}
 (<%) : Template record -> (record -> String) -> Template record
 (<%) =
-    andValue
+  andValue
 
 
 {-| Operator alias for andString
@@ -23,4 +25,4 @@ import Template exposing (Template, andValue, andString)
 -}
 (%>) : Template record -> String -> Template record
 (%>) =
-    andString
+  andString
