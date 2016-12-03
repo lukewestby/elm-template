@@ -1,4 +1,4 @@
-module Template exposing (Template, template, withValue, andValue, withString, andString, render)
+module Template exposing (Template, template, withValue, withString, render)
 
 {-| Type-safe string templating
 
@@ -6,7 +6,7 @@ module Template exposing (Template, template, withValue, andValue, withString, a
 @docs Template
 
 # construction
-@docs template, withValue, withString, andValue, andString
+@docs template, withValue, withString
 
 # rendering
 @docs render
@@ -46,15 +46,6 @@ withValue interpolator template =
   Interpolation interpolator :: template
 
 
-{-| Attach a record accessor to a template inline
-
-    template "my string " `andValue` .hello
--}
-andValue : Template record -> (record -> String) -> Template record
-andValue =
-  flip withValue
-
-
 {-| Attach a string to a template
 
     template "my string "
@@ -64,15 +55,6 @@ andValue =
 withString : String -> Template record -> Template record
 withString string template =
   (Literal string) :: template
-
-
-{-| Attach a string to a template inline
-
-    template "my string " `andValue` .hello `andString` " another string"
--}
-andString : Template record -> String -> Template record
-andString =
-  flip withString
 
 
 renderComponent : record -> Component record -> String -> String

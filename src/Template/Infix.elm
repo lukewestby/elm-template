@@ -5,9 +5,8 @@ module Template.Infix exposing (..)
 @docs (<%), (%>)
 -}
 
--- where
 
-import Template exposing (Template, andValue, andString)
+import Template exposing (Template, withValue, withString)
 
 
 {-| Operator alias for andValue
@@ -16,7 +15,7 @@ import Template exposing (Template, andValue, andString)
 -}
 (<%) : Template record -> (record -> String) -> Template record
 (<%) =
-  andValue
+  flip withValue
 
 
 {-| Operator alias for andString
@@ -25,4 +24,4 @@ import Template exposing (Template, andValue, andString)
 -}
 (%>) : Template record -> String -> Template record
 (%>) =
-  andString
+  flip withString
