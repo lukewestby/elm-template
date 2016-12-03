@@ -17,16 +17,6 @@ render myTemplate { name = "Luke" }
 
 ```
 
-Using inline functions:
-```elm
-import Template exposing (template, render, andValue, andString)
-
-myTemplate =
-  template "My name is " `andValue` .name `andString` ", nice to meet you!"
-
-render myTemplate { name = "Luke" }
-```
-
 Using infix operators:
 ```elm
 import Template exposing (template, render)
